@@ -45,8 +45,9 @@ public class Player : MonoBehaviour
 
     private void playerJump()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+            //if the user presses space, and the player is grounded, then jump
             playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpForce);
         }
     }
@@ -60,6 +61,7 @@ public class Player : MonoBehaviour
         }
         else if(collision.gameObject.CompareTag("Ground"))
         {
+            //if the player is colliding with the ground, then the player is grounded
             isGrounded = true;
         }
     }
@@ -68,6 +70,7 @@ public class Player : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Ground"))
         {
+            //if the player is not touching the ground, then the player is not grounded
             isGrounded = false;
         }
     }
