@@ -6,4 +6,9 @@ using UnityEngine;
 public static class GameManager
 {
     public static string GAME_SCENE = "SampleScene";
+
+    public void gameOver()
+    {
+        
+    }
 }

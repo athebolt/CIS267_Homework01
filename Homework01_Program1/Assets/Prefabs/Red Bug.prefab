@@ -515,6 +515,7 @@ GameObject:
   - component: {fileID: 6775650087742891959}
   - component: {fileID: 5393605809849490681}
   - component: {fileID: 3727529261799091676}
+  - component: {fileID: 896383034798424095}
   m_Layer: 0
   m_Name: Red Bug
   m_TagString: Untagged
@@ -640,3 +641,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &896383034798424095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4291218888062637230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fea64cd9ef7afd48a5a7adb86b8fcfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

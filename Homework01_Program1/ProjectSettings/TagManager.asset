@@ -7,6 +7,8 @@ TagManager:
   - OB
   - Ground
   - Coin
+  - Bug
+  - Flower
   layers:
   - Default
   - TransparentFX
