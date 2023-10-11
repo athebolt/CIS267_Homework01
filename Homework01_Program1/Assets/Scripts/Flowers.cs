@@ -18,7 +18,7 @@ public class Flowers : MonoBehaviour
     {
         if(isDead())
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 
@@ -27,7 +27,10 @@ public class Flowers : MonoBehaviour
         if(collision.gameObject.CompareTag("Bug"))
         {
             Debug.Log("Hit");
-            health--;
+
+            health = health - 1;
+
+            collision.GetComponent<BugAI>().destroyBug();
         }
     }
 

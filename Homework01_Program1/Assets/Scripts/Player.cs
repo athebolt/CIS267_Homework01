@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
         if(collision.gameObject.CompareTag("OB"))
         {
             //reload the screen if there is a collsion in the boundary
-            SceneManager.LoadScene(GAME_SCENE);
+            SceneManager.LoadScene("GameScene");
         }
         else if(collision.gameObject.CompareTag("Ground"))
         {
@@ -109,6 +109,14 @@ public class Player : MonoBehaviour
 
             //destroys the collectable
             collision.GetComponent<Collectables>().destroyCollectable();
+        }
+        else if(collision.gameObject.CompareTag("Bug"))
+        {
+            int bugValue = collision.GetComponent<BugAI>().getBugValue();
+
+            playerScore += bugValue;
+
+            collision.GetComponent<BugAI>().destroyBug();
         }
     }
 

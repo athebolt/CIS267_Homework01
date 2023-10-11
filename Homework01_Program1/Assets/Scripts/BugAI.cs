@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
 public class BugAI : MonoBehaviour
 {
     public int movementSpeed;
+    public int bugValue;
 
     // Start is called before the first frame update
     void Start()
@@ -18,15 +20,21 @@ public class BugAI : MonoBehaviour
         transform.Translate(Vector2.down * movementSpeed * Time.deltaTime);
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public int getBugValue()
     {
-        if(collision.gameObject.CompareTag("Flower"))
+        return bugValue;
+    }
+
+    public void destroyBug()
+    {
+        Destroy(this.gameObject);
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            Destroy(this.gameObject);
-        }
-        else if(collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(this.gameObject);
+            destroyBug();
         }
     }
 }

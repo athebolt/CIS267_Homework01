@@ -3,11 +3,21 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 
-public static class GameManager
+public class GameManager : MonoBehaviour 
 {
-    public static string GAME_SCENE = "SampleScene";
+    private GameObject flower;
+    private Flowers fScript;
+    private void Start()
+    {
+        
+    }
 
-    public void gameOver()
+    private void Update()
+    {
+        //isGameOver();
+    }
+
+    private void isGameOver()
     {
         
     }

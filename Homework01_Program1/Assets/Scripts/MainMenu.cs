@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static GameManager;
 
 public class MainMenu : MonoBehaviour
 {
@@ -10,7 +9,7 @@ public class MainMenu : MonoBehaviour
     //when start button is pressed, this scene will activate.
     public void startGame()
     {
-        SceneManager.LoadScene(GAME_SCENE);
+        SceneManager.LoadScene("GameScene");
     }
 
     //connected to quit button
