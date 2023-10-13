@@ -37,9 +37,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         movePlayerLateral();
-        playerJump();
+        chargeJump();
         playerScoreFormula();
         updatePlayerScore();
+        playerJump();
     }
 
     //========================================================================================
@@ -58,12 +59,24 @@ public class Player : MonoBehaviour
         playerRigidBody.velocity = new Vector2(movementSpeed * inputHorizontal, playerRigidBody.velocity.y);
     }
 
+    private void chargeJump()
+    {
+        //while the player holds space on the ground, the player changes their jump to a max of 10
+        if(Input.GetKey(KeyCode.Space) && isGrounded && jumpForce <= 10)
+        {
+            Debug.Log("Charing Jump");
+            jumpForce += Time.deltaTime * 4;
+        }
+    }
+
     private void playerJump()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if(Input.GetKeyUp(KeyCode.Space))
         {
-            //if the user presses space, and the player is grounded, then jump
-            playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpForce);
+        //once the player releases space, or the jump maxes at 10, the player jumps
+        playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpForce);
+
+        jumpForce = 3;
         }
     }
 
@@ -93,6 +106,8 @@ public class Player : MonoBehaviour
         {
             //if the player is not touching the ground, then the player is not grounded
             isGrounded = false;
+
+            Debug.Log("Not Grounded");
         }
     }
 
