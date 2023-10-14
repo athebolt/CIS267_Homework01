@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
         if(Input.GetKey(KeyCode.Space) && isGrounded && jumpForce <= 10)
         {
             Debug.Log("Charing Jump");
-            jumpForce += Time.deltaTime * 4;
+            jumpForce += Time.deltaTime * 5;
         }
     }
 
