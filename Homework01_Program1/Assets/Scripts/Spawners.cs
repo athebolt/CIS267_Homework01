@@ -61,7 +61,7 @@ public class Spawners : MonoBehaviour
                 randomIndex = Random.Range(0, bugs.Length);
 
                 //spawns bug
-                spawnedBug = Instantiate(bugs[randomIndex].gameObject);
+                spawnedBug = Instantiate(bugs[randomIndex]);
 
                 //place bug at location
                 spawnedBug.transform.position = new Vector2(bugLocations[i].transform.position.x, bugLocations[i].transform.position.y);
@@ -76,9 +76,9 @@ public class Spawners : MonoBehaviour
         int randomIndex;
         GameObject spawnedCoin;
 
-        randomIndex = Random.Range(0,collectLocations.Length);
+        randomIndex = Random.Range(0, collectLocations.Length);
 
-        spawnedCoin = Instantiate(coin.gameObject);
+        spawnedCoin = Instantiate(coin);
 
         spawnedCoin.transform.position = new Vector2(collectLocations[randomIndex].transform.position.x, collectLocations[randomIndex].transform.position.y);
     }
@@ -94,7 +94,7 @@ public class Spawners : MonoBehaviour
 
             if(spawn == 0)
             {
-                spawnedPlatform = Instantiate(platform.gameObject);
+                spawnedPlatform = Instantiate(platform);
 
                 spawnedPlatform.transform.position = new Vector2(platformLocations[i].transform.position.x, platformLocations[i].transform.position.y);
             }
