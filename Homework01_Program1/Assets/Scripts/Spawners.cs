@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Spawners : MonoBehaviour
 {
+    private float timePassed;
     private int counter;
     private int bugRarity;
     public GameObject[] bugs;
@@ -13,14 +15,13 @@ public class Spawners : MonoBehaviour
     public GameObject[] collectables;
     public GameObject[] collectLocations;
     public GameObject platform;
-    public GameObject leadPlatform;
-    public GameObject leadPlatformLocation;
     public GameObject[] platformLocations;
 
     // Start is called before the first frame update
     void Start()
     {
         counter = 0;
+        timePassed = 0f;
         bugRarity = 4;
 
         spawnPlatforms();
@@ -30,11 +31,16 @@ public class Spawners : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //counter += (int)Time.deltaTime;
+        timePassed += Time.deltaTime;
+        if(timePassed > 2.5f)
+        {
+            Debug.Log("2.5 seconds passed");
 
-        //spawnBugs();
-        //spawnCollectables();
-        //spawnPlatforms();
+            spawnerControl();
+
+            timePassed = 0f;
+        }
+
     }
 
     public void spawnBugs()
@@ -46,7 +52,7 @@ public class Spawners : MonoBehaviour
         //for each spawn location
         for(int i = 0; i < bugLocations.Length; i++)
         {
-            //decide to spawn something here
+            //decide to spawn a bug here or not
             spawn = Random.Range(0, bugRarity);
 
             if(spawn == 0)
@@ -66,17 +72,21 @@ public class Spawners : MonoBehaviour
 
     public void spawnCollectables()
     {
-        
+
+        int randomIndex;
+        GameObject spawnedCoin;
+
+        randomIndex = Random.Range(0,collectLocations.Length);
+
+        spawnedCoin = Instantiate(coin.gameObject);
+
+        spawnedCoin.transform.position = new Vector2(collectLocations[randomIndex].transform.position.x, collectLocations[randomIndex].transform.position.y);
     }
 
     public void spawnPlatforms()
     {
         int spawn;
         GameObject spawnedPlatform;
-
-        spawnedPlatform = Instantiate(platform.gameObject);
-
-        spawnedPlatform.transform.position = new Vector2(leadPlatformLocation.transform.position.x, leadPlatformLocation.transform.position.y);
 
         for(int i = 0; i < platformLocations.Length; i++)
         {
@@ -91,39 +101,36 @@ public class Spawners : MonoBehaviour
         }
     }
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public void spawnerControl()
     {
-        Debug.Log("Trigger Enter");
+        Debug.Log("Trigger Lead Platform");
 
-        if(collision.gameObject.CompareTag("LeadPlatform"))
+        counter++;
+
+        //spawn a new layer of platforms/collectables/bugs
+        if(counter % 2 == 0)
         {
-            Debug.Log("Trigger Lead Platform");
-
-            counter++;
-
-            //spawn a new layer of platforms/collectables/bugs
-            if(counter % 2 == 0)
-            {
-                spawnBugs();
-            }
-
-            spawnPlatforms();
-
-            if(counter % 3 == 0)
-            {
-                spawnCollectables();
-            }
-
-            //increase bugs spawned
-            if(counter >= 20)
-            {
-                bugRarity = 1;
-            }
-            else if(counter >= 10)
-            {
-                bugRarity = 3;
-            }
+            spawnBugs();
         }
+
+        spawnPlatforms();
+
+        if(counter % 3 == 0)
+        {
+            //spawnCollectables();
+        }
+
+        //increase bugs spawned
+        if(counter >= 20)
+        {
+            bugRarity = 2;
+        }
+
+        else if(counter >= 10)
+        {
+            bugRarity = 3;
+        }
+        
     }
 
 }

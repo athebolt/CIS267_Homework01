@@ -219,5 +219,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectableValue: 10
-  movementSpeed: 0
-  endPos: 0
+  movementSpeed: 1
+  endPos: -8

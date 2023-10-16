@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static GameManager;
 using TMPro;
 
 public class Player : MonoBehaviour
@@ -12,7 +11,7 @@ public class Player : MonoBehaviour
     //private variables
     private Rigidbody2D playerRigidBody;
     private float inputHorizontal;
-    private bool isGrounded;
+    private bool canJump;
     private double playerScore;
     private Collectables collectable;
 
@@ -20,6 +19,7 @@ public class Player : MonoBehaviour
     public float movementSpeed;
     public float jumpForce;
     public TMP_Text guiScore;
+    public GameObject respawn;
     
     //========================================================================================
     //START AND UPDATE
@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
         //getting the rigidbody component from the player and assigning it to the variable "playerRigidBody"
         playerRigidBody = GetComponent<Rigidbody2D>();
         playerScore = 0;
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
@@ -62,7 +63,7 @@ public class Player : MonoBehaviour
     private void chargeJump()
     {
         //while the player holds space on the ground, the player changes their jump to a max of 10
-        if(Input.GetKey(KeyCode.Space) && isGrounded && jumpForce <= 10)
+        if(Input.GetKey(KeyCode.Space) && jumpForce <= 10)
         {
             Debug.Log("Charing Jump");
             jumpForce += Time.deltaTime * 5;
@@ -71,12 +72,14 @@ public class Player : MonoBehaviour
 
     private void playerJump()
     {
-        if(Input.GetKeyUp(KeyCode.Space))
+        if(Input.GetKeyUp(KeyCode.Space) && canJump)
         {
-        //once the player releases space, or the jump maxes at 10, the player jumps
-        playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpForce);
+            //once the player releases space, or the jump maxes at 10, the player jumps
+            playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpForce);
 
-        jumpForce = 3;
+            jumpForce = 3;
+
+            canJump = false;
         }
     }
 
@@ -89,25 +92,13 @@ public class Player : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("OB"))
         {
-            //reload the screen if there is a collsion in the boundary
-            SceneManager.LoadScene("GameScene");
+            //respawn player if there is a collsion with the boundary
+            this.transform.position = new Vector2(respawn.transform.position.x, respawn.transform.position.y);
         }
         else if(collision.gameObject.CompareTag("Ground"))
         {
             //if the player is colliding with the ground, then the player is grounded
-            isGrounded = true;
-        }
-    }
-
-    //if the player is no longer colliding with something, check what it is
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if(collision.gameObject.CompareTag("Ground"))
-        {
-            //if the player is not touching the ground, then the player is not grounded
-            isGrounded = false;
-
-            Debug.Log("Not Grounded");
+            canJump = true;
         }
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
     public int movementSpeed;
+    public int endPos;
 
     // Start is called before the first frame update
     void Start()
@@ -16,5 +17,10 @@ public class Platform : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.down * movementSpeed * Time.deltaTime);
+
+        if(transform.position.y <= endPos)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6028668833589219223}
   - component: {fileID: 2833329053382134616}
   - component: {fileID: 7300216906452484747}
-  - component: {fileID: 5893640252526124033}
+  - component: {fileID: 8330404546147420770}
   m_Layer: 0
   m_Name: Flower
   m_TagString: Flower
@@ -143,7 +143,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &5893640252526124033
+--- !u!114 &8330404546147420770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
+  guiFlowerHealth: {fileID: 0}
 --- !u!1 &3177487529270130545
 GameObject:
   m_ObjectHideFlags: 0
