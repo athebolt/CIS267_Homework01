@@ -117,7 +117,7 @@ public class Spawners : MonoBehaviour
 
         if(counter % 3 == 0)
         {
-            //spawnCollectables();
+            spawnCollectables();
         }
 
         //increase bugs spawned

@@ -12,14 +12,12 @@ public class Collectables : MonoBehaviour
 
     private void Update()
     {
-        float curPos = transform.position.y;
+        transform.Translate(Vector2.down * movementSpeed * Time.deltaTime);
 
-        while (curPos >= endPos)
+        if (transform.position.y <= endPos)
         { 
-            transform.Translate(Vector2.down * movementSpeed * Time.deltaTime);
+            Destroy(this.gameObject);
         }
-
-        //Destroy(this.gameObject);
     }
 
     public void destroyCollectable()
