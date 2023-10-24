@@ -10,7 +10,7 @@ public class GameDriver : MonoBehaviour
 {
     public GameObject[] flowers;
     public GameObject gameOverScreen;
-    private int deadFlowers;
+    public GameObject player;
 
     private void Start()
     {
@@ -19,34 +19,37 @@ public class GameDriver : MonoBehaviour
 
     private void Update()
     {
-        isGameOver();
+        if(isGameOver())
+        {
+            setGameOver(true);
+        }
     }
 
-    private void isGameOver()
+    private bool isGameOver()
     {
-        deadFlowers = 0;
-
         foreach(GameObject flower in flowers)
         {
             if(flower.GetComponent<Flower>().isDead())
             {
-                deadFlowers++;
+                return true;
             }
         }
 
-        if(deadFlowers == 4)
-        {
-            //game is over
-            Debug.Log("Game Over");
-
-            Time.timeScale = 0f;
-            
-            gameOverScreen.SetActive(true);
-        }
+        return false;
     }
 
-    private void evaluateGameState()
+    private void setGameOver(bool gameOver)
     {
-        
+        if(gameOver)
+        {
+            gameOverScreen.SetActive(true);
+            Time.timeScale = 0f;
+            SaveData.SaveScore(player.GetComponent<Player>().getPlayerScore());
+        }
+        else
+        {
+            gameOverScreen.SetActive(false);
+            Time.timeScale = 1f;
+        }
     }
 }
