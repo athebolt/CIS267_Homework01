@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using TMPro;
 
 public class Flower : MonoBehaviour
 {
     public int health;
-    public TMP_Text guiFlowerHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -22,8 +20,6 @@ public class Flower : MonoBehaviour
         {
             this.gameObject.SetActive(false);
         }
-
-        guiFlowerHealth.text = health.ToString();
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -49,5 +45,15 @@ public class Flower : MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void setHealth(int h)
+    {
+        health = h;
+    }
+
+    public int getHealth()
+    {
+        return health;
     }
 }

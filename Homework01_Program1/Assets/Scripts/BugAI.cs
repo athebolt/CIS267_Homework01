@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BugAI : MonoBehaviour
 {
-    public int movementSpeed;
+    public float movementSpeed;
     public int bugValue;
 
     // Start is called before the first frame update

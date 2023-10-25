@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Unity.VisualScripting;
 
 public static class SaveData
 {
     public static void SaveScore(int score)
     {
+        
         if(score > LoadScore())
         {
             string path = Application.persistentDataPath + "/playerScore.sc";
@@ -15,9 +17,10 @@ public static class SaveData
             FileStream stream = new FileStream(path, FileMode.Create);
 
             bf.Serialize(stream, score);
-
+            
             stream.Close();
         }
+    
     }
 
     public static int LoadScore()

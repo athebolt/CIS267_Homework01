@@ -10,6 +10,9 @@ TagManager:
   - Bug
   - Flower
   - LeadPlatform
+  - Heal
+  - ShieldActivator
+  - Bomb
   layers:
   - Default
   - TransparentFX

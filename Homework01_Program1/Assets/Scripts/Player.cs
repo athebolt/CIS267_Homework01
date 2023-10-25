@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Unity.Burst;
 
 public class Player : MonoBehaviour
 {
@@ -13,13 +14,17 @@ public class Player : MonoBehaviour
     private float inputHorizontal;
     private bool canJump;
     private double playerScore;
-    private Collectables collectable;
+    private Animator playerAnimator;
 
     //public variables, will appear in the inspector
-    public float movementSpeed;
+    public float playerSpeed;
+    public float acceleration;
+    public float maxSpeed;
     public float jumpForce;
     public TMP_Text guiScore;
     public GameObject respawn;
+    public GameObject[] flowers;
+    public GameObject shield;
     
     //========================================================================================
     //START AND UPDATE
@@ -30,6 +35,7 @@ public class Player : MonoBehaviour
     {
         //getting the rigidbody component from the player and assigning it to the variable "playerRigidBody"
         playerRigidBody = GetComponent<Rigidbody2D>();
+        playerAnimator = GetComponent<Animator>();
         playerScore = 0;
         Time.timeScale = 1f;
     }
@@ -48,25 +54,40 @@ public class Player : MonoBehaviour
     //PLAYER MOVEMENT
     //========================================================================================
 
-    //temp movement will be improved
     private void movePlayerLateral()
     {
+        if(inputHorizontal == 0)
+        {
+            playerSpeed = 1;
+        }
+
         //will get horizontal input of the keyboard (a or d/left or right arrow keys)
         //left is -1
         //right is 1
         //none is 0
         inputHorizontal = Input.GetAxisRaw("Horizontal");
 
-        playerRigidBody.velocity = new Vector2(movementSpeed * inputHorizontal, playerRigidBody.velocity.y);
+        playerRigidBody.velocity = new Vector2(playerSpeed * inputHorizontal, playerRigidBody.velocity.y);
+
+        playerSpeed += acceleration;
+
+        if(playerSpeed >= maxSpeed)
+        {
+            playerSpeed = maxSpeed;
+        }
     }
 
     private void chargeJump()
     {
         //while the player holds space on the ground, the player changes their jump to a max of 10
-        if(Input.GetKey(KeyCode.Space) && jumpForce <= 10)
+        if(Input.GetKey(KeyCode.Space) && jumpForce <= 20)
         {
             Debug.Log("Charing Jump");
-            jumpForce += Time.deltaTime * 5;
+
+
+            jumpForce += Time.deltaTime * 10;
+
+            playerAnimator.SetBool("isJumpCharge", true);
         }
     }
 
@@ -74,6 +95,10 @@ public class Player : MonoBehaviour
     {
         if(Input.GetKeyUp(KeyCode.Space) && canJump)
         {
+            playerAnimator.SetBool("isJumpCharge", false);
+
+            playerAnimator.SetTrigger("jumpReleased");
+
             //once the player releases space, or the jump maxes at 10, the player jumps
             playerRigidBody.velocity = new Vector2(playerRigidBody.velocity.x, jumpForce);
 
@@ -112,9 +137,6 @@ public class Player : MonoBehaviour
 
             //add the collectable value of the object to the player's score
             playerScore += collectableValue;
-
-            //destroys the collectable
-            collision.GetComponent<Collectables>().destroyCollectable();
         }
         else if(collision.gameObject.CompareTag("Bug"))
         {
@@ -123,6 +145,23 @@ public class Player : MonoBehaviour
             playerScore += bugValue;
 
             collision.GetComponent<BugAI>().destroyBug();
+        }
+        else if(collision.gameObject.CompareTag("Heal"))
+        {
+            foreach(GameObject flower in flowers)
+            {
+                flower.GetComponent<Flower>().setHealth(3);
+            }
+        }
+        else if(collision.gameObject.CompareTag("ShieldActivator"))
+        {
+            shield.SetActive(true);
+        }
+        else if(collision.gameObject.CompareTag("Bomb"))
+        {
+            FindAnyObjectByType<BugAI>().destroyBug();
+            
+            FindAnyObjectByType<BugAI>().destroyBug();
         }
     }
 

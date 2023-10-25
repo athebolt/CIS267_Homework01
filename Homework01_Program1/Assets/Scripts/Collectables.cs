@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,7 +8,7 @@ public class Collectables : MonoBehaviour
 {
     //value of coin
     public int collectableValue;
-    public int movementSpeed;
+    public float movementSpeed;
     public float endPos;
 
     private void Update()
@@ -37,5 +38,11 @@ public class Collectables : MonoBehaviour
         return collectableValue;
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag.Equals("Player"))
+        {
+            destroyCollectable();
+        }
+    }
 }

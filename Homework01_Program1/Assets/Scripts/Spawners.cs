@@ -11,10 +11,9 @@ public class Spawners : MonoBehaviour
     private int bugRarity;
     public GameObject[] bugs;
     public GameObject[] bugLocations;
-    public GameObject coin;
     public GameObject[] collectables;
     public GameObject[] collectLocations;
-    public GameObject platform;
+    public GameObject[] platforms;
     public GameObject[] platformLocations;
 
     // Start is called before the first frame update
@@ -32,10 +31,9 @@ public class Spawners : MonoBehaviour
     void Update()
     {
         timePassed += Time.deltaTime;
+        
         if(timePassed > 2.5f)
         {
-            Debug.Log("2.5 seconds passed");
-
             spawnerControl();
 
             timePassed = 0f;
@@ -74,17 +72,21 @@ public class Spawners : MonoBehaviour
     {
 
         int randomIndex;
-        GameObject spawnedCoin;
+        int randomCollectable;
+        GameObject spawnedCollectable;
 
         randomIndex = Random.Range(0, collectLocations.Length);
 
-        spawnedCoin = Instantiate(coin);
+        randomCollectable = Random.Range(0, collectables.Length);
 
-        spawnedCoin.transform.position = new Vector2(collectLocations[randomIndex].transform.position.x, collectLocations[randomIndex].transform.position.y);
+        spawnedCollectable = Instantiate(collectables[randomCollectable]);
+
+        spawnedCollectable.transform.position = new Vector2(collectLocations[randomIndex].transform.position.x, collectLocations[randomIndex].transform.position.y);
     }
 
     public void spawnPlatforms()
     {
+        int randomIndex;
         int spawn;
         GameObject spawnedPlatform;
 
@@ -94,7 +96,9 @@ public class Spawners : MonoBehaviour
 
             if(spawn == 0)
             {
-                spawnedPlatform = Instantiate(platform);
+                randomIndex = Random.Range(0, platforms.Length);
+
+                spawnedPlatform = Instantiate(platforms[randomIndex]);
 
                 spawnedPlatform.transform.position = new Vector2(platformLocations[i].transform.position.x, platformLocations[i].transform.position.y);
             }
