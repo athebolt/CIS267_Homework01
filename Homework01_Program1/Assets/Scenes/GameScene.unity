@@ -3317,7 +3317,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 1775216879}
   player: {fileID: 328234663}
   guiFlowerHealth: {fileID: 470290377}
-  acceleration: 0.01
+  acceleration: 0.005
 --- !u!1 &1645824378
 GameObject:
   m_ObjectHideFlags: 0
