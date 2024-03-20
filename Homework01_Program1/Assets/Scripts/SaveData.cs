@@ -10,7 +10,7 @@ public static class SaveData
         
         if(score > LoadScore())
         {
-            string path = Application.persistentDataPath + "/playerScore.sc";
+            string path = Application.persistentDataPath + "/playerScore.txt";
 
             BinaryFormatter bf = new BinaryFormatter();
 
@@ -25,7 +25,7 @@ public static class SaveData
 
     public static int LoadScore()
     {
-        string path = Application.persistentDataPath + "/playerScore.sc";
+        string path = Application.persistentDataPath + "/playerScore.txt";
 
         if(File.Exists(path))
         {
